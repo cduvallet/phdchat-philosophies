@@ -1,976 +1,383 @@
 <!-- .slide: data-background="#3F51B5" class="dark" -->
 
-# Qiime II for 16S Amplicon Sequence Analysis
+### Tips, tricks, and philosophies on computational work
 
-### Christian Diener & Sean M. Gibbons
+##### Claire Duvallet
 
-<img src="assets/logo_white.png" width="40%">
+Alm lab summit
 
-from the *CCMB workshop 2018*
-
-https://gibbons-lab.github.io/ccmb_workshop
+February 7, 2019
 
 ---
 
-Created ~2010 during the Human Microbiome Project (2007 - 2016) under leadership
-of Greg Caporaso and Rob Knight.
+
+### Why this talk?
+
+- You've already heard my science    
+- People say: "zomg how do you do it?"          
+- I want to share the gospel of good practices    
 
 ---
 
-## What is Qiime?
-
-> QIIME 2 is a powerful, extensible, and decentralized microbiome
-analysis package with a focus on data and analysis transparency.
-
-*Q*uantitative *i*nsights *i*nto *M*icrobial *E*cology
+## 1. Philosophy
+## 2. Organization
+## 3. Code
 
 ---
 
-## So what is it really?
-
-In its essence Qiime is a set of *commands* to transform microbiome *data* into
-*intermediate* outputs and *visualization*.
-
-<img src="assets/barplot.gif" width="100%">
-
-Its major mode of use is via the *command line*.
+## 1. Driving philosophies
 
 ---
 
-*Qiime 2* was introduced 2016 and improves on Qiime 1 based on the experiences
-during the HMP.
+### Philosophy 1
 
-Major changes:
+#### Everything I do, I do for me*
 
-- integrated tracking of *data provenance*
-- semantic *type system*
-- extendable *plugin* system
-- multiple *user interfaces* (in progress)
+_\*future me, that is_
+
+:heart_eyes_cat:
 
 ---
 
-## Where to find help?
+#### "What can I do to make future Claire love present Claire?"
 
-Qiime 2 comes with a lot of help starting from https://qiime2.org such
-as [tutorials](https://docs.qiime2.org/2018.11/tutorials/),
-[general documentation](https://docs.qiime2.org/2018.11/) and a
-[user forum](https://forum.qiime2.org/) to ask questions.
-
----
-
-## Artifacts, actions and visualizations
-
-Qiime 2 manages *artifacts* which is basically intermediate data that is fed
-to *actions* to either produce other artifacts or *visualizations*.
-
-<img src="assets/key.png" width="50%"><img src="assets/overview.png" width="50%">
+- Bread crumbs: READMEs, comments, docs           
+- Take notes on everything     
+- Label files thoughtfully and searchably    
+- Don't put off the small amounts of extra work     
 
 ---
 
-## Remember
+If you died in a bus crash tomorrow, how hard would it be to pick up the pieces?
 
-Artifacts can be *intermediate steps*, but Visualizations are *end points*
-meant for human consumption :point_up:.
+:oncoming_bus:
 
----
+If your computer dies the week of your defense, how long would it take you to get back up and running?
 
-<!-- .slide: data-background="#2962FF" class="dark" -->
-
-# Walkthrough I
-
-## Analyzing the microbial composition in colorectal cancers
+:scream:
 
 ---
 
-## The setup
+### Philosophy 2
 
-Qiime 2 currently only has native support for Mac and Linux.
+Grad school is a time to build skills and _grow_
 
-It can also be deployed on a server or the [cloud](https://docs.qiime2.org/2018.11/install/virtual/aws/).
-
-----
-
-Goal for now: get a working Qiime 2 environment.
-
-There might be some minor set up steps :point_right:
+:deciduous_tree:
 
 ---
 
-<!-- .slide: data-background="#00897B" class="dark" -->
+#### If it would 20% additional effort to be useful to the rest of the world, do it
 
-# If you use Qiime 2 on a server...
+¯\\\_(ツ)\_/¯
 
-----
+Just seems like the right thing to do...
 
-<!-- .slide: data-background="#00897B" class="dark" -->
+Note: also my brother tricked me into this one, slash I misinterpreted him.
 
-## Windows: Install Putty and WinSCP
+---
 
-----
+#### What's in it for me?
 
-### Putty
+#### Why am I doing what I'm doing?
 
-To connect to the server we will need a SSH client. You can download Putty
-at https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
-(most likely the 64bit version).
+I say yes to things that benefited me.
 
-Run the downloaded installer and you are set.
+_Learning new skills, making connections, building good favor: all of it counts!_
 
-If you open Putty it will ask you for a server address your user
-name and password and will connect you to the server.
+Note: just make sure you're not doing something for nothing! this talk is an example! I wanted to learn this new presentation style, and write down my reflections on strategies that worked for posterity. Examples: almlab website --> learned xml and css sort of, microbiome club --> got infinite favors from eric
 
-----
+---
 
-### WinSCP
+## 2. Organization
 
-`WinSCP` will allow you to transfer files between you computer and the server.
+Projects     
+Notes and files      
+Data      
 
-Download it at https://winscp.net/eng/download.php .
+---
 
-After installing and running it will ask you for the same info as before. Choose
-SFTP or SCP as the protocol (default) and provide the server address
-your user and password.
+All of my repos are basically the same structure:
 
-----
+```
+├── Makefile           
+├── README.md        <- If you don't have a README
+|                       did you even make a repo?
+|
+├── data             <- OTU tables (if small enough),
+|                       QIIME 2 outputs, metadata excel
+|                       files, trees, etc.
+│
+├── src              <- All code: scripts, notebooks, etc.
+|
+└── final            <- Final figures, supp files, tables.
 
-<!-- .slide: data-background="#00897B" class="dark" -->
+```
 
-## Mac or Linux: Install nothing :stuck_out_tongue:
+---
 
-But you will need to open a terminal...
+#### data
 
-----
+```
+├── data
+    ├── raw          <- Raw data in all of its
+    |                   messy glory. NEVER CHANGE!
+    |                   Raw data = outputs of processing,
+    |                   e.g. original OTU table.
+    ├── clean        <- Intermediate data that has
+    |                   been cleaned up, e.g. OTU
+    |                   table with low QC samples
+    |                   removed.
+    └── analysis     <- Outputs from analyses (e.g.
+                        beta diversity, p-values, etc)
+```
 
-Type "terminal" in the application menu.
+Some files will probably be too large to commit: **keep these backed up somewhere else!**
 
-You can connect to the server with
+Note: can have other folders here too. Others I've had are qiime2-output, tree, etc. Also look into github large file storage
+
+---
+
+#### src
+
+```
+├── src
+    ├── data         <- Code used to wrangle and
+    |                   clean data.
+    |── exploration  <- Jumble of iPython notebooks
+    |                   with preliminary work. Label
+    |                   these by data + brief description.
+    ├── analysis     <- Scripts used to produce files
+    |                   in data/analysis/. For the most
+    |                   part, Makefile calls these.
+    ├── figures      <- Scripts to make figures.
+    └── util         <- If you want, files with commonly
+                        re-used functions
+```
+
+Iterative process between notebooks and scripts.
+
+---
+
+#### final
+
+```
+├── final
+    ├── figures      <- Where you save final png's,
+    |                   also pushed to GitHub if you want.
+    |── tables       <- If you're feeling ambitious,
+    |                   markdown versions of tables
+    └── supp_files   <- Files that would otherwise be
+                        supplementary Excel files
+```
+
+Mostly for you to organize outputs.
+
+---
+
+Read more at Cookie Cutter data science:
+
+https://drivendata.github.io/cookiecutter-data-science/
+
+---
+
+## Organization
+
+~~Projects~~       
+Notes and files      
+Data      
+
+---
+
+#### Make all notes and files human-readable and searchable
+
+Anything "messy" starts with a date
+
+Use delimiters creatively
+
+`grep` is your best friend
+
+---
+
+#### There is only one correct way to write the date
+
+# 2019-02-07
+
+Note: That's it. The entire internet agrees with me.
+
+---
+
+<img src="img/notes_example.png">
+
+---
+
+# Never edit your raw data
+
+---
+
+#### Storing raw data
+
+All data folders should have associated README: who, what, when, why, how?
+
+Google drive and Dropbox are dangerous: who did what when?
+
+---
+
+#### Working with changing data
+
+If files are small enough: version control with github
+
+Otherwise, keep versions ... somehow?
+
+---
+
+## 3. Coding
+
+Makefiles     
+Tidy data     
+
+_Implementing these two concepts changed my life_
+
+---
+
+#### Makefiles
 
 ```sh
-ssh user@server
+make figure3.png
 ```
-where `user` is your username and `server` the web address of the server.
 
-You can transfer files using `rsync`
+<img src="img/make_schematic.png" width="50%">
+
+---
+
+#### General idea
+
+```
+target: dependencies
+    rule
+```
+
+To make a `target`, run the `rule` iff any of the `dependencies` are _newer_ than the target.
+
+---
 
 ```sh
-rsync user@server:~/file.txt .
+make figure3.png
+```
+
+<img src="img/make_schematic.png" width="50%">
+
+---
+
+```
+figure3.png: src/figure/figure3.py disease_meta.txt \
+        core_bugs.txt
+    python src/figure/figure3.py \
+        --in_meta disease_meta.txt ...
+
+disease_meta.txt: src/analysis/disease_meta.py \
+        qvalues.txt
+    python src/analysis/disease_meta.py \
+        --qvals qvalues.txt \
+        --out disease_meta.txt
+
+qvalues.txt: src/analysis/qvalues.py \
+        otu.clean meta.clean
+    python src/analysis/qvalues.py \
+        --otu out.clean --meta meta.clean
 ```
 
 ---
 
-<!-- .slide: data-background="#00897B" class="dark" -->
+<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
 
-# If you want to install Qiime 2 on your own equipment?
+#### But why?
 
-https://docs.qiime2.org/2018.11/install/
+zomg reviewer comments zomg
 
-----
+<i class="em em-exploding_head"></i>
 
-## Mac or Linux: use conda
+#### Also:
 
-1. Install miniconda -> https://conda.io/miniconda.html
-2. Get the conda environment file for [Mac](https://data.qiime2.org/distro/core/qiime2-2018.11-py35-osx-conda.yml)
-   or [Linux](https://data.qiime2.org/distro/core/qiime2-2018.11-py35-linux-conda.yml)
-3. Set up the Qiime 2 environment and activate it
+The code _is_ the documentation of what you did.
 
-```sh
-conda env create -n qiime2-2018.11 --file qiime2-2018.11-py35-osx-conda.yml
-source activate qiime2-2018.11
+It makes future you love current you. :heart_eyes_cat:
+
+Note: give example, latest paper wanted alpha diversity, which I had done but commented out. Now I know exactly what script to run and what inputs it requires.
+
+---
+
+<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+
+#### Tidy data
+
+Literally life-changing.
+
+:panda_face: + <i class="em em-exploding_head"></i> = :nerd: :mortar_board:
+
+---
+
+#### The idea is that each unique observation gets its own line
+
+Tidyfied OTU table:
+
 ```
-
-----
-
-## Windows: use docker
-
-No native support but you can run it with Docker (virtual machine alternative).
-
-See https://store.docker.com/editions/community/docker-ce-desktop-windows.
-
-With docker you can get the Qiime 2 container with:
-
-```sh
-docker pull qiime2/core:2018.11
-```
-
-Also see [this forum post](https://forum.qiime2.org/t/issue-with-docker-toolbox-install-mingw-path-conversion/735/2).
-
----
-
-### Wait... what?
-
-<img src="assets/guide.png" width="30%">
-
-*All* output we generate can be found in the `treasure_chest` folder at
-
-https://github.com/gibbons-lab/ccmb_workshop
-
----
-
-<!-- .slide: data-background="assets/lab.jpg" class="dark" -->
-
-## Our data
-
-16S amplicon sequencing data of the V4 region from fecal samples
-
-16 healthy donors and 16 donors with colorectal cancer (CRC).
-
-2 studies in the data:
-
-- https://doi.org/10.1158/1940-6207.CAPR-14-0129
-- https://doi.org/10.1186/s13073-016-0290-3
-
----
-
-## What will we do today?
-
-<img src="assets/steps.png" width="100%">
-
----
-
-Start by copying the [course materials](https://github.com/Gibbons-Lab/ccmb_workshop/archive/master.zip)
-to a folder on your machine or the server.
-
-For now we will use the following files:
-
-1. `ubc_data` - directory with the sequencing data
-2. `ubc_manifest.csv` - list of sequencing files
-3. `samples.tsv` - metadata for the samples
-
----
-
-## Illumina FastQ files (Basespace)
-
-<img src="assets/illumina.png" width="60%">
-
-```plaintext
-@SRR2143527.13917 13917 length=251
-TACGTAGGTGGCGAGCGTTATCCGGAATTATTGGGCGTAAA...
-+
-BBBBAF?A@D2BEEEGGGFGGGHGGGCFGFHHCFHCEFGGH...
+otu_id  sample_id   counts
+otu1    s1          0.0
+otu1    s2          16.0
+otu1    s3          0.0
+...     ...         ...
+otu2    s1          1.0
+otu2    s2          0.0
+otu2    s3          20.0
 ```
 
 ---
 
-We have our raw sequencing data but Qiime 2 only operates on artifacts. How
-do we convert our data to an artifact?
+#### But why?
 
-:egg: ↔ :hatched_chick:
+Query subsets of data
+
+Merge data
+
+Harness seaborn
+
+_Just trust me_
+_(and Nathaniel and the #Rstats internet!)_
 
 ---
 
-## Activate your Qiime 2 environment :rocket:
+## Thanks for listening!
 
-```bash
-source activate qiime2-2018.11
+<img src="img/soapbox.gif">
+
+Note: source = https://nightowlmom2.wordpress.com/category/soapbox/
+
+---
+
+
+---
+
+Note:```
+├── LICENSE
+├── Makefile           
+├── README.md        <- If you don't have a README did you even make a repo?
+|
+├── data
+│   ├── raw          <- Raw data in all of its messy glory. NEVER CHANGE!
+│   ├── clean        <- Intermediate data that has been cleaned up
+│   └── analysis     <- Outputs from analyses (e.g. beta diversity, p-values, etc)
+│
+├── src
+│   ├── data         <- Code used to wrangle and clean data.
+|   |── exploration  <- Jumble of iPython notebooks with preliminary work
+│   ├── analysis     <- Scripts used to produce files in data/analysis
+│   └── util         <- If you want, files with commonly re-used functions
+|
+├── final
+    ├── figures      <- Place where final png's get saved, also pushed to GitHub.
+    |── tables       <- If you're feeling ambitious, markdown versions of tables
+    └── supp_files   <- Files that would otherwise be supplementary Excel files
+
 ```
 
 ---
-
-## Our first Qiime 2 command
-
-We can import the data with the `import` action. For that we have to give
-Qiime 2 a *manifest* (list of raw files) and tell it what *type of data* we
-are importing and what *type of artifact* we want.
-
-```bash
-# use `\` to break up long lines
-qiime tools import \
-  --type 'SampleData[SequencesWithQuality]' \
-  --input-path ubc_manifest.csv \
-  --output-path ubc_data.qza \
-  --input-format SingleEndFastqManifestPhred33
-```
-
----
-
-Since we have quality information for the sequencing reads, let's also generate
-our first visualization by inspecting those:
-
-```bash
-qiime demux summarize --i-data ubc_data.qza --o-visualization qualities.qzv
-```
-
-Copy the file to your local machine.
-
----
-
-## View a Qiime 2 visualization
-
-https://view.qiime2.org
-
-Have a <a href="data/qualities/data" target="_blank">:bar_chart:look</a> at the qualities.
-
-:thinking_face: What do you observe across the read? Where would you truncate the reads?
-
----
-
-Qiime 2 commands can become pretty long. Here some pointers to remember the
-structure of a command:
-
-```
-qiime plugin action --i-argument1 ... --o-argument2 ...
-```
-
-Argument types usually begin with a letter denoting their meaning:
-
-- `--i-...` = input files
-- `--o-...` = output files
-- `--p-...` = parameters
-- `--m-...` = metadata
-
----
-
-## Time to bring in the big guns :bomb::zap:
-
-We will now run the DADA2 plugin which will do 3 things:
-
-1. filter and trim the reads
-2. find the most likely original sequences in the sample (ASVs)
-3. remove chimeras
-4. count the abundances
-
----
-
-Since it takes a bit let's start the process and use the time to
-understand what is happening:
-
-```bash
-qiime dada2 denoise-single \
-    --i-demultiplexed-seqs ubc_data.qza \
-    --p-trunc-len 220 --p-trim-left 10 \
-    --output-dir dada2 --verbose
-```
-
-Alternatively just pull the pre-computed data with:
-
-```sh
-cp -r /srv/workshop/treasure_chest/dada2 ~
-```
-
----
-
-## Identifying alternative sequence variants
-
-<img src="assets/dada2.png" width="80%">
-
-Expectation-Maximization (EM) algorithm to find alternative sequence variants
-(ASVs) and the real error model at the same time.
-
----
-
-## PCR chimeras
-
-<img src="assets/chimera.png" width="60%">
-
----
-
-We now have a table containing the counts for each ASV in each sample.
-We also have a list of ASVs.
-
-<br>
-
-:thinking_face: Do you have an idea what we could do with those two data sets? What quantities
-might we be interested in?
-
----
-
-## Relationship between ASVs
-
-One of the basic things we might want to see is how the sequences across
-all samples are related to one another. We are interested in their *phylogeny*.
-
-<br>
-
-We can build a phylogenetic tree for our sequences using the following command:
-
-```bash
-qiime phylogeny align-to-tree-mafft-fasttree \
-    --i-sequences dada2/representative_sequences.qza \
-    --output-dir tree
-```
-
----
-
-You can visualize your tree using iTOL (https://itol.embl.de/).
-
-<img src="assets/tree.png" width="75%">
-
----
-
-<!-- .slide: data-background="#00897B" class="dark" -->
-
-## Diversity
-
-In microbial community analysis we are usually interested in two different diversity quantities,
-*alpha diversity* and *beta diversity*.
-
----
-
-## Alpha diversity
-
-How diverse is a single sample?
-
-<br>
-
-- how many taxa do we observe (richness)? → #observed taxa
-- are taxa equally abundant or are there rare/dominant taxa? → Shannon, Evenness
-
----
-
-## Beta diversity
-
-How different are two or more samples/donors/sites from each other?
-
-<br>
-
-- how many taxa are *shared* between samples? → Jaccard index
-- do shared taxa have the *same abundance*? → Bray-Curtis distance
-- do samples share *phylogenetically similar* taxa? → UniFrac, Faith PD
-
----
-
-We can create a whole bunch of diversity metrics with Qiime 2 at once.
-
-```bash
-qiime diversity core-metrics-phylogenetic \
-    --i-table dada2/table.qza \
-    --i-phylogeny tree/rooted_tree.qza \
-    --p-sampling-depth 8000 \
-    --m-metadata-file samples.tsv \
-    --output-dir diversity
-```
-
-----
-
-## Principal Coordinate Analysis
-
-<img src="assets/pcoa.png" width="100%">
-
-<a href="data/weighted_unifrac/data" target="_blank">:bar_chart: See output...</a>
-
----
-
-We can also use the diversity plugin to check if there are differences in
-alpha diversity between groups:
-
-```bash
-qiime diversity alpha-group-significance \
-    --i-alpha-diversity diversity/shannon_vector.qza \
-    --m-metadata-file samples.tsv \
-    --o-visualization diversity/alpha_groups.qzv
-```
-
-<br>
-
-<a href="data/alpha_shannon/data" target="_blank">:bar_chart: See output...</a>
-
----
-
-<!-- .slide: data-background="#00897B" class="dark" -->
-
-## But what organisms are there in our sample?
-
-We are still just working with sequences and have no idea what *organisms*
-those correspond to.
-
-<br>
-
-:thinking_face: What would you do to go from a sequence to an organism/bacteria?
-
----
-
-Even though just looking for our sequence in a *database of known genes*
-seems like the best idea that does not work great in practice. Why?
-
-<br>
-
-More elaborate methods use *subsequences (k-mers)* and their counts to *predict* the
-lineage/taxonomy with *machine learning* methods. For 16S amplicon fragments this
-provides better *generalization*.
-
----
-
-We will use a classifier trained on the GreenGenes database.
-
-https://docs.qiime2.org/2018.11/data-resources/
-
-```bash
-qiime feature-classifier classify-sklearn \
-    --i-reads dada2/representative_sequences.qza \
-    --i-classifier gg-13-8-99-515-806-nb-classifier.qza \
-    --o-classification taxa.qza
-```
-
----
-
-Now let's have a look what and how much of different bacteria we have in
-each sample:
-
-<br>
-
-```bash
-qiime taxa barplot \
-    --i-table dada2/table.qza \
-    --i-taxonomy taxa.qza \
-    --m-metadata-file samples.tsv \
-    --o-visualization taxa_barplot.qzv
-```
-
-<br>
-
-:thinking_face: What do you observe? Can you find things that look interesting in the
-cancer samples?
-
-----
-
-## Phylogenetic ranks
-
-<img src="assets/ranks.png" width="40%">
-
-<br>
-
-<a href="data/barplot/data" target="_blank">:bar_chart: See output...</a>
-
----
-
-<!-- .slide: data-background="#2962FF" class="dark" -->
-
-# Walkthrough II
-
-## Differential abundance testing
-
----
-
-In a metagenome analysis differential abundance testing is the use of
-of *statistical tests* to identify *taxa* that are different across
-a *phenotype* of interest (for instance case vs. control).
-
----
-
-## Questions we should ask
-
-1. What *preprocessing/transformation* do I apply to the abundances (biases)?
-2. At which *taxonomy rank* should I test?
-3. What *test* do I use (parametric, non-parametric, Bayesian)
-4. How do I control for *multiple testing*?
-
----
-
-<!-- .slide: data-background="#00897B" class="dark" -->
-
-## Data transformations
-
-Converting abundances to relative abundances (percent) makes the data
-*compositional*, meaning the relative abundance of one taxon depends
-on the others.
-
-> A sample can not have 80% B. fragilis and 50% E. coli at the same time.
-
-Loading the sequencer itself already introduces some compositional effect
-as well (constant amount of DNA).
-
----
-
-*Compositional* data usually violates *independence* assumptions of most
-statistical tests.
-
-There are many strategies to deal with that. Log-ratios work pretty
-well in most cases.
-
----
-
-## Compositional testing in Qiime 2
-
-Qiime 2 has a methods to test in compositional data. [ANCOM](https://www.ncbi.nlm.nih.gov/pubmed/26028277)
-tests with single taxa and [GNEISS](https://msystems.asm.org/content/2/1/e00162-16) tests for balances between several
-taxa.
-
-:thinking_face: But which taxonomy rank should we use?
-
----
-
-## Summarizing feature tables
-
-In Qiime 2 we can summarize a feature table at a particular taxonomy rank
-using the `collapse` method.
-
-```bash
-qiime taxa collapse \
-    --i-table dada2/table.qza \
-    --i-taxonomy taxa.qza \
-    --p-level 6 \
-    --o-collapsed-table genus.qza
-```
-
----
-
-## ANCOM
-
-Qiime 2 has a method that improves testing for compositional data
-called [ANCOM](https://www.ncbi.nlm.nih.gov/pubmed/26028277). It can not
-deal with zero abundances so it needs us to add a *pseudo count* first.
-
-<br>
-
-```bash
-qiime composition add-pseudocount --i-table genus.qza --o-composition-table added_pseudo.qza
-```
-
-```bash
-qiime composition ancom \
-    --i-table added_pseudo.qza \
-    --m-metadata-file samples.tsv \
-    --m-metadata-column status \
-    --o-visualization ancom.qzv
-```
-
-<br>
-
-<a href="data/ancom/data" target="_blank">:bar_chart: See output...</a>
-
----
-
-## Choosing the right test
-
-Parametric tests tend to have better *statistical power* but assumptions
-about the underlying *distribution* might not be adequate for microbiome
-data.
-
----
-
-<!-- .slide: data-background="assets/hare.jpg" class="dark" -->
-
-# Non-parametric tests
-
----
-
-## Mann-Whitney U test (Wilcoxon rank-sum test)
-
-<img src="assets/race.png" width="100%">
-
----
-
-## Faster way: use ranks
-
-<img src="assets/race_rs.png" width="100%">
-
----
-
-<!-- .slide: data-background="#2962FF" class="dark" -->
-
-# Walkthrough III
-
-## Percentile Normalization
-
----
-
-<!-- .slide: data-background="assets/lab.jpg" class="dark" -->
-
-# Even more data
-
-We will continue using colorectal cancer data sets, but this time from a
-larger cohort (408 donors).
-
-1. Baxter study (https://doi.org/10.1186/s13073-016-0290-3, n=292)
-2. Zeller study (https://doi.org/10.15252/msb.20145645, n=116)
-
-You already have the counts with assigned taxa in the artifact
-`crc_dataset.qza`. The metadata can be found in `crc_metadata.tsv`.
-
----
-
-## Batch effects in the wild
-
-As mentioned before diversity analysis might be a good initial step. To make
-it easier on us we will only use the non-phylogenetic core metrics.
-
-<br>
-
-:thinking_face: do you remember the command? If not, does looking at the
-[available plugins](https://docs.qiime2.org/2018.11/plugins/) help?
-
-----
-
-```bash
-qiime diversity core-metrics \
-    --i-table crc_dataset.qza \
-    --p-sampling-depth 100000 \
-    --m-metadata-file crc_metadata.tsv \
-    --output-dir crc_diversity
-```
-
-Have a look at the Bray-Curtis PCoA plot and observe the batch effect.
-
-<a href="data/crc_bray/data" target="_blank">:bar_chart: See output...</a>
-
-:thinking_face: Why is this likely a batch effect and not biological signal?
-
----
-
-## Running percentile normalization
-
-There is a Qiime 2 plugin for percentile normalization by Claire Duvallet.
-In an existing Qiime 2 installation you can get it with
-
-```sh
-conda install -c cduvallet q2_perc_norm
-```
-
-It is already installed on the server :tada:
-
-----
-
-The Qiime 2 perc-norm plugin only operates on relative frequency tables,
-so let us first convert our table into that format...
-
-```bash
-qiime feature-table relative-frequency \
-	--i-table crc_dataset.qza \
-	--o-relative-frequency-table crc_relative.qza
-```
-
-Now we can continue with the actual normalization :point_down:
-
-----
-
-```bash
-qiime perc-norm percentile-normalize \
-	--i-table crc_relative.qza \
-	--m-metadata-file crc_metadata.tsv \
-	--m-metadata-column disease_state \
-	--m-batch-file crc_metadata.tsv \
-	--m-batch-column study \
-	--p-otu-thresh 0.0 \
-	--o-perc-norm-table percentile_normalized.qza
-```
-
----
-
-Cool, we have our normalized data. Let's just plug that into the other
-Qiime 2 actions...
-
-<img src="assets/curse.png" width="60%">
-
-----
-
-`percentile_normalized.qza` has the type `FeatureTable[PercentileNormalized]`
-but most Qiime 2 actions want a `FeatureTable[Frequency]`.
-
----
-
-## Qiime 2 does let you work around that :nerd_face:
-
-But you will *lose provenance* and should make sure what you do *makes sense*.
-
-:thinking_face: Does it make sense to rarefy a `FeatureTable[PercentileNormalized]`?
-
-----
-
-## The Artifact API
-
-You can open a Python interpreter with typing `ipython` (close it with `Ctrl-D`).
-
-```python
-from qiime2 import Artifact
-import pandas as pd
-
-df = Artifact.load("percentile_normalized.qza").view(pd.DataFrame)
-converted = Artifact.import_data("FeatureTable[Frequency]", df)
-converted.save("pnorm_freq.qza")
-```
-
----
-
-## PCoA of the normalized data
-
-We do not want to rarefy this time so we have to build up the PCoA steps
-ourselves (can not use `qiime diversity core-metrics`).
-
-:thinking_face: Could you come up with the commands yourselves? Think about the
-data (artifacts) you will need for each step...
-
-Solution :point_down:
-
-----
-
-### Step 1: Get the Bray-Curtis distance matrix
-
-```bash
-qiime diversity beta \
-    --i-table pnorm_freq.qza \
-    --p-metric braycurtis \
-    --o-distance-matrix pnorm_bray.qza
-```
-
-----
-
-### Step 2: Calculate the PCoA
-
-```bash
-qiime diversity pcoa --i-distance-matrix pnorm_bray.qza --o-pcoa pnorm_pcoa.qza
-```
-
-----
-
-### Step 3: Visualize with Emperor
-
-```bash
-qiime emperor plot \
-    --i-pcoa pnorm_pcoa.qza \
-    --m-metadata-file crc_metadata.tsv \
-    --o-visualization pnorm_pcoa_emperor.qzv
-```
-
-<a href="data/pnorm_pcoa/data" target="_blank">:bar_chart: See output...</a>
-
----
-
-<!-- .slide: data-background="#00897B" class="dark" -->
-
-## Non-parametric testing
-
-This is currently not included in Qiime 2. However, you can connect
-your own scripts to Qiime 2.
-
-See `wilcoxon_test.py`.
-
-----
-
-```sh
-(qiime2) cdiener@moneta [ubc2018] python wilcoxon_test.py -h
-usage: wilcoxon_test.py [-h] -i I -m M [-o O] [-a A] [-t T]
-
-run rank sums tests on case-control dataset
-
-optional arguments:
-  -h, --help  show this help message and exit
-  -i I        input OTU table qiime artifact (rows = samples, columns =
-              phylotypes; default format = tab-delimited)
-  -m M        case-control metadata with "disease_state" column
-  -o O        output file name [default: rank_sums_results.txt]
-  -a A        alpha-level for test
-  -t T        occurence threshold in case or control
-```
-
----
-
-## Within study testing
-
-Lets now look at the significant results in the following settings:
-
-1. in the individual studies without normalization
-2. in the pooled studies without normalization
-3. in the pooled studies with percentile normalization
-
----
-
-## Separating the studies
-
-A data set can be stratified with the `feature-table` plugin:
-
-```bash
-qiime feature-table filter-samples \
-	--i-table crc_dataset.qza \
-	--m-metadata-file crc_metadata.tsv \
-	--p-where "study=='baxter'" \
-	--o-filtered-table baxter_table.qza
-```
-
-...and for the second study:
-
-```bash
-qiime feature-table filter-samples \
-	--i-table crc_dataset.qza \
-	--m-metadata-file crc_metadata.tsv \
-	--p-where "study=='zeller'" \
-	--o-filtered-table zeller_table.qza
-```
-
----
-
-## Example: The Baxter study
-
-```bash
-python wilcoxon_test.py -i baxter_table.qza -m crc_metadata.tsv
-```
-
-This will generate a file `rank_sums_results.txt` with the taxonomy and
-p-values for each significant results and a plot `p-value_histogram.png`
-that contains the overall distribution of p-values.
-
-http://varianceexplained.org/statistics/interpreting-pvalue-histogram/
-
----
-
-## Your turn!
-
-<img src="assets/coding.gif" width="50%">
-
-----
-
-Run the differential tests for the data sets as specified before:
-
-1. in the individual studies without normalization
-2. in the pooled studies without normalization
-3. in the pooled studies with percentile normalization
-
-:thinking_face: What do you observe in terms of significant results and p-value distributions.
-
-:thinking_face: What happens if you modify the significance (alpha) level or
-the occurrence threshold?
-
-----
-
-# Solutions
-
-<img src="data/p-value_histogram.png" width="60%">
-
-----
-
-```bash
-python wilcoxon_test.py -i zeller_table.qza -m crc_metadata.tsv
-```
-
-```bash
-python wilcoxon_test.py -i crc_dataset.qza -m crc_metadata.tsv
-```
-
-```bash
-python wilcoxon_test.py -i pnorm_freq.qza -m crc_metadata.tsv
-```
-
-```bash
-python wilcoxon_test.py -i pnorm_freq.qza -m crc_metadata.tsv -a 0.01 -t 0.1
-```
-
----
-
-<!-- .slide: data-background="#3F51B5" class="dark" -->
-
-### And we are done :clap:
-
-# Thanks!
-
----
-
-# :bike: Too fast? :blue_car:
-
-Here some more questions to investigate.
-
----
-
-Are beta diversity differences explained by the phenotype?
-
-How much variance is explained by healthy vs. disease?
-
-What about batch effects?
-
-https://docs.qiime2.org/2018.11/plugins/available/diversity/beta-group-significance/
-
----
-
-Could you predict if someone had colorectal cancer just from 16S data?
-
-Does pooling studies help here?
-
-https://docs.qiime2.org/2018.11/plugins/available/sample-classifier/classify-samples/

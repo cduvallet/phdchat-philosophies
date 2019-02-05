@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>PhD Chat: Tips, tricks, and philosophies for computational work</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/night.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -23,27 +23,82 @@
 	</head>
 	<body>
 		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+			<div id="hidden" style="display:none;">
+
+                <div class="footer">
+                    <a href="hhttps://creativecommons.org/licenses/by-nc-sa/4.0/"><i class="fa fa-bullhorn"></i>CC BY-NC-SA 4.0</a>
+                    <a href="https://gibbons.systemsbiology.org/"><i class="fa fa-globe"></i>gibbons.systemsbiology.org</a>
+        			<a href="https://github.com/gibbons-lab"><i class="fa fa-github"></i>gibbons-lab</a>
+        			<a href="https://twitter.com/gibbological"><i class="fa fa-twitter"></i>@gibbological</a>
+        			<a href="https://twitter.com/thaasophobia"><i class="fa fa-twitter"></i>@thaasophobia</a>
+                </div>
+		    </div>
+
+            <div class="slides">
+                <section data-markdown="phdchat.md"
+                id="markdown"
+                data-separator-vertical="^\n----\n"
+                data-separator-notes="^Note:"></section>
+            </div>
 
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
+
+        <!--Enable emojis-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/lib/js/emojione.min.js"></script>
 
 		<script>
 			// More info about config & dependencies:
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
+
+            // I copied this code from Christian Diener's presentation,
+            // not sure which parts make the emojis show up but I am keeping it all...
 			Reveal.initialize({
+				//width: 1200,
+				//height: 750,
+                backgroundTransition: 'zoom',
+                math: {
+		            mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js',
+		            config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+	            },
+                markdown: {
+                    smartypants: true
+                },
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
+					{ src: 'rplugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/math/math.js', async: true }
+                ]
 			});
+            emojione.imageType = 'svg';
+            emojione.ascii = true;
+            Reveal.addEventListener( 'slidechanged', function( event ) {
+                var current = event.currentSlide;
+                window.MathJax.Hub.Rerender(current);
+                current.innerHTML = emojione.toImage(current.innerHTML);
+            } );
+
+            // I think all this stuff is to make the footer show up
+			// var footer = document.getElementsByClassName("footer")[0];
+    		// if ( window.location.search.match( /print-pdf/gi ) ) {
+        	// 	Reveal.addEventListener( 'ready', function( event ) {
+			// 		var backgrounds = document.querySelectorAll(".slide-background");
+            // 		Array.from(backgrounds).forEach(
+			// 			function(el) {el.innerHTML += footer.outerHTML;});
+			// 		var sections = document.querySelectorAll("section");
+			// 		Array.from(sections).forEach(
+			// 			function(el) {el.innerHTML = emojione.toImage(el.innerHTML);});
+        	// 	});
+    		// } else {
+        	// 	document.querySelector("div.reveal").appendChild(footer);
+   			// }
+    		</script>
+
+
 		</script>
+
 	</body>
 </html>
