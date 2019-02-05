@@ -1,0 +1,84 @@
+Summit talk
+
+- Philosophies
+- Code & data
+- Time & information
+
+# Philosophies
+
+- for coding:
+	- make future you love current you
+	- if it's 20% more effort (or less) to make it useful to the rest of the world, do it
+- for organization:
+	- if you died in a bus crash tomorrow, how much work would be lost for the lab?
+	- if your computer died the week of your defense, how long would it take you to get back up and running?
+- maximize the value *for you* for everything that you do
+	- e.g. this talk: using it as an opportunity to learn a new presentation skill and concisely document what I've learned for my online "brand" (also I hope you guys like it, but tbh I'm not sure this will actually change anyone's minds)
+
+BACK THINGS UP
+- show my computer's organization: I have nothing in my Documents folder
+
+# Code and data
+
+##  Folder organization
+
+- being well-organized enables a lot of the following things to be implemented easily/relatively painlessly
+- cookie cutter data science
+- and it enables a makefile
+	- an aside about Makefiles: talk about reviews!!
+	- also give a brief intro to generic concept of make
+	- and mention other options, e.g. snakemake
+- also you can break up different parts of your project
+	- my and scott's example: can't put the data on github, but do want code there
+
+## Data
+
+- never edit raw data
+- clean data and write all intermediates to text files
+	- should never be re-calculating something within a script -- make it separate and then go from that file in your explorations
+	- use random seeds for everything
+- file naming
+	- use different delimiters for different types of information (e.g. date, project category, content)
+	- the only correct way to write dates
+	- goal is for the generic content to be greppable
+- tidy data!!
+	- this will change your world, it changed mine (and Nathaniel's, I think?) -- let's talk about it later
+
+## Code
+
+- process of exploration to finalizing
+	- notebooks vs. scripts
+	- also make sure you're updating the Makefile as you go along
+- notebook naming file scheme
+- Makefile
+	- I'll just say it again.
+- Comments are for you in six months, not for anyone else
+- VERSION CONTROL IT FOR THE LOVE OF GOD
+	- why not earlier rather than later?
+	- don't flatter yourself, no one is looking at your code
+	- and if they are and you're embarrassed, then you're doing it wrong! again, think of the bus crash.
+
+# Time and information
+
+## Time management
+
+- I tracked my time, you don't have to but it helped me know when I was on track or slacking
+	- don't think it actually motivated me to change though, woops
+	- fyi: i average ~32 hours/week. that's my equilibrium
+- Having other things to do kept me on track: 
+	- never got bored, except the last like six months when I was WAY LESS productive cuz I didn't have other things to do
+	- helped me fill time that would otherwise be wasted
+- Schedule my time strategically: 
+	- I know I can read papers and write in the morning (so I treat myself to A4 and write for two-three hours)
+	- Pretty useless from 12-4 pm (so meetings scheduled then if possible)
+	- Then can work again, until 6-8 pm (but I don't mind staying late)
+	
+## Information
+
+- sign up for every email list: get good at marking as read / triaging emails
+- examples: 
+	- stats: datascienceweekly, simplystatistics (RSS feed, but whatevs)
+	- viz: flowingdata, the pudding
+	- public health: every CDC email list (an aside: you can sign up for all govt email lists), CIDRAP newsletter (though it's a bit meh)
+	- biotech: STAT news
+	- jobs: literally any company that seems remotely interesting, MassBio, careerbridge
