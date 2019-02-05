@@ -115,7 +115,7 @@ All of my repos are basically the same structure:
 
 ---
 
-#### data
+#### data/
 
 ```
 ├── data
@@ -137,7 +137,7 @@ Note: can have other folders here too. Others I've had are qiime2-output, tree, 
 
 ---
 
-#### src
+#### src/
 
 ```
 ├── src
@@ -158,7 +158,7 @@ Iterative process between notebooks and scripts.
 
 ---
 
-#### final
+#### final/
 
 ```
 ├── final
@@ -210,6 +210,20 @@ Note: That's it. The entire internet agrees with me.
 
 ---
 
+Also, everything is on the cloud.
+
+<img src="img/documents.png">
+
+---
+
+## Organization
+
+~~Projects~~       
+~~Notes and files~~      
+Data      
+
+---
+
 # Never edit your raw data
 
 ---
@@ -251,12 +265,12 @@ make figure3.png
 
 #### General idea
 
+To make a `target`, run the `rule` iff any of the `dependencies` are _newer_ than the target.
+
 ```
 target: dependencies
     rule
 ```
-
-To make a `target`, run the `rule` iff any of the `dependencies` are _newer_ than the target.
 
 ---
 
@@ -269,21 +283,16 @@ make figure3.png
 ---
 
 ```
-figure3.png: src/figure/figure3.py disease_meta.txt \
-        core_bugs.txt
-    python src/figure/figure3.py \
-        --in_meta disease_meta.txt ...
+figure3.png: figure3.py disease_meta.txt core_bugs.txt
+    python figure3.py --in_meta disease_meta.txt ...
 
-disease_meta.txt: src/analysis/disease_meta.py \
-        qvalues.txt
-    python src/analysis/disease_meta.py \
-        --qvals qvalues.txt \
+disease_meta.txt: disease_meta.py qvalues.txt
+    python disease_meta.py --qvals qvalues.txt \
         --out disease_meta.txt
 
-qvalues.txt: src/analysis/qvalues.py \
-        otu.clean meta.clean
+qvalues.txt: qvalues.py otu.clean meta.clean
     python src/analysis/qvalues.py \
-        --otu out.clean --meta meta.clean
+        --otu otu.clean --meta meta.clean ...
 ```
 
 ---
@@ -329,6 +338,7 @@ otu1    s3          0.0
 otu2    s1          1.0
 otu2    s2          0.0
 otu2    s3          20.0
+...     ...         ...
 ```
 
 ---
@@ -342,7 +352,15 @@ Merge data
 Harness seaborn
 
 _Just trust me_
-_(and Nathaniel and the #Rstats internet!)_
+_(and Nathaniel (and the #Rstats internet!))_
+
+---
+
+## In conclusion...
+
+### Do everything such that future you falls madly in love with present you
+
+Note: Think of your computational PhD as an act of radical self-love
 
 ---
 
