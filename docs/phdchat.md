@@ -10,14 +10,17 @@ February 7, 2019
 
 ---
 
+<!-- .slide: data-background="#767171" class="dark" -->
 
 ### Why this talk?
 
 - You've already heard my science    
-- People say: "zomg how do you do it?"          
+- People say: "how do you do it?"          
 - I want to share the gospel of good practices    
 
 ---
+
+<!-- .slide: data-background="#767171" class="dark" -->
 
 ## 1. Philosophy
 ## 2. Organization
@@ -25,7 +28,9 @@ February 7, 2019
 
 ---
 
-## 1. Driving philosophies
+<!-- .slide: data-background="#3F51B5" class="dark" -->
+
+## 1. Philosophies
 
 ---
 
@@ -88,6 +93,8 @@ Note: just make sure you're not doing something for nothing! this talk is an exa
 
 ---
 
+<!-- .slide: data-background="#3F51B5" class="dark" -->
+
 ## 2. Organization
 
 Projects     
@@ -98,7 +105,7 @@ Data
 
 All of my repos are basically the same structure:
 
-```
+```shell
 ├── Makefile           
 ├── README.md        <- If you don't have a README
 |                       did you even make a repo?
@@ -117,7 +124,7 @@ All of my repos are basically the same structure:
 
 #### data/
 
-```
+```shell
 ├── data
     ├── raw          <- Raw data in all of its
     |                   messy glory. NEVER CHANGE!
@@ -139,7 +146,7 @@ Note: can have other folders here too. Others I've had are qiime2-output, tree, 
 
 #### src/
 
-```
+```shell
 ├── src
     ├── data         <- Code used to wrangle and
     |                   clean data.
@@ -160,7 +167,7 @@ Iterative process between notebooks and scripts.
 
 #### final/
 
-```
+```shell
 ├── final
     ├── figures      <- Where you save final png's,
     |                   also pushed to GitHub if you want.
@@ -180,6 +187,8 @@ https://drivendata.github.io/cookiecutter-data-science/
 
 ---
 
+<!-- .slide: data-background="#3F51B5" class="dark" -->
+
 ## Organization
 
 ~~Projects~~       
@@ -195,6 +204,16 @@ Anything "messy" starts with a date
 Use delimiters creatively
 
 `grep` is your best friend
+
+---
+
+### It's not just me!
+
+<img src="img/naming_files_tweet.png" width="40%">
+
+<img src="img/naming_files.png" width="40%">
+
+http://buff.ly/2wa5QXz
 
 ---
 
@@ -215,6 +234,8 @@ Also, everything is on the cloud.
 <img src="img/documents.png">
 
 ---
+
+<!-- .slide: data-background="#3F51B5" class="dark" -->
 
 ## Organization
 
@@ -244,6 +265,8 @@ Otherwise, keep versions ... somehow?
 
 ---
 
+<!-- .slide: data-background="#3F51B5" class="dark" -->
+
 ## 3. Coding
 
 Makefiles     
@@ -255,7 +278,7 @@ _Implementing these two concepts changed my life_
 
 #### Makefiles
 
-```sh
+```shell
 make figure3.png
 ```
 
@@ -267,14 +290,14 @@ make figure3.png
 
 To make a `target`, run the `rule` iff any of the `dependencies` are _newer_ than the target.
 
-```
+```shell
 target: dependencies
     rule
 ```
 
 ---
 
-```sh
+```shell
 make figure3.png
 ```
 
@@ -282,7 +305,7 @@ make figure3.png
 
 ---
 
-```
+```shell
 figure3.png: figure3.py disease_meta.txt core_bugs.txt
     python figure3.py --in_meta disease_meta.txt ...
 
@@ -329,7 +352,7 @@ Literally life-changing.
 
 Tidyfied OTU table:
 
-```
+```shell
 otu_id  sample_id   counts
 otu1    s1          0.0
 otu1    s2          16.0
@@ -356,9 +379,11 @@ _(and Nathaniel (and the #Rstats internet!))_
 
 ---
 
+<!-- .slide: data-background="#3F51B5" class="dark" -->
+
 ## In conclusion...
 
-### Do everything such that future you falls madly in love with present you
+### Do everything such that future you falls _madly in love_ with present you
 
 Note: Think of your computational PhD as an act of radical self-love
 
@@ -372,6 +397,7 @@ Note: source = https://nightowlmom2.wordpress.com/category/soapbox/
 
 ---
 
+---
 
 ---
 
