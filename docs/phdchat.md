@@ -2,7 +2,7 @@
 
 ### Tips, tricks, and philosophies on computational work
 
-##### Claire Duvallet
+### Claire Duvallet
 
 Alm lab summit
 
@@ -15,7 +15,6 @@ February 7, 2019
 ### Why this talk?
 
 - You've already heard my science    
-- People say: "how do you do it?"          
 - I want to share the gospel of good practices    
 
 ---
@@ -46,10 +45,7 @@ _\*future me, that is_
 
 #### "What can I do to make future Claire love present Claire?"
 
-- Bread crumbs: READMEs, comments, docs           
-- Take notes on everything     
-- Label files thoughtfully and searchably    
-- Don't put off the small amounts of extra work     
+Bread crumbs: READMEs, comments, docs           
 
 ---
 
@@ -68,16 +64,6 @@ If your computer dies the week of your defense, how long would it take you to ge
 Grad school is a time to build skills and _grow_
 
 :deciduous_tree:
-
----
-
-#### If it would 20% additional effort to be useful to the rest of the world, do it
-
-¯\\\_(ツ)\_/¯
-
-Just seems like the right thing to do...
-
-Note: also my brother tricked me into this one, slash I misinterpreted him.
 
 ---
 
@@ -165,22 +151,6 @@ Iterative process between notebooks and scripts.
 
 ---
 
-#### final/
-
-```shell
-├── final
-    ├── figures      <- Where you save final png's,
-    |                   also pushed to GitHub if you want.
-    |── tables       <- If you're feeling ambitious,
-    |                   markdown versions of tables
-    └── supp_files   <- Files that would otherwise be
-                        supplementary Excel files
-```
-
-Mostly for you to organize outputs.
-
----
-
 Read more at Cookie Cutter data science:
 
 https://drivendata.github.io/cookiecutter-data-science/
@@ -207,29 +177,13 @@ Use delimiters creatively
 
 ---
 
-### It's not just me!
-
-<img src="img/naming_files_tweet.png" width="40%">
-
-<img src="img/naming_files.png" width="40%">
-
-http://buff.ly/2wa5QXz
-
----
-
-#### There is only one correct way to write the date
-
-# 2019-02-07
-
-Note: That's it. The entire internet agrees with me.
-
----
-
 <img src="img/notes_example.png">
 
 ---
 
 Also, everything is on the cloud.
+
+_(Remember the potential :scream:)_
 
 <img src="img/documents.png">
 
@@ -257,14 +211,6 @@ Google drive and Dropbox are dangerous: who did what when?
 
 ---
 
-#### Working with changing data
-
-If files are small enough: version control with github
-
-Otherwise, keep versions ... somehow?
-
----
-
 <!-- .slide: data-background="#3F51B5" class="dark" -->
 
 ## 3. Coding
@@ -276,17 +222,7 @@ _Implementing these two concepts changed my life_
 
 ---
 
-#### Makefiles
-
-```shell
-make figure3.png
-```
-
-<img src="img/make_schematic.png" width="50%">
-
----
-
-#### General idea
+#### General idea behind make
 
 To make a `target`, run the `rule` iff any of the `dependencies` are _newer_ than the target.
 
@@ -332,7 +268,7 @@ zomg reviewer comments zomg
 
 The code _is_ the documentation of what you did.
 
-It makes future you love current you. :heart_eyes_cat:
+_(Remember: make future you love current you._ :heart\_eyes\_cat: )
 
 Note: give example, latest paper wanted alpha diversity, which I had done but commented out. Now I know exactly what script to run and what inputs it requires.
 
@@ -348,7 +284,7 @@ Literally life-changing.
 
 ---
 
-#### The idea is that each unique observation gets its own line
+#### In tidy data, each unique observation gets its own line
 
 Tidyfied OTU table:
 
@@ -363,6 +299,8 @@ otu2    s2          0.0
 otu2    s3          20.0
 ...     ...         ...
 ```
+
+Note: then you can add sample metadata, otu-metadata; easily group things together; easily make plots with libraries like seaborn
 
 ---
 
@@ -401,7 +339,23 @@ Note: source = https://nightowlmom2.wordpress.com/category/soapbox/
 
 ---
 
-Note:```
+Supplementary
+
+---
+
+---
+
+#### If it would 20% additional effort to be useful to the rest of the world, do it
+
+¯\\\_(ツ)\_/¯
+
+Just seems like the right thing to do...
+
+Note: also my brother tricked me into this one, slash I misinterpreted him.
+
+---
+
+```
 ├── LICENSE
 ├── Makefile           
 ├── README.md        <- If you don't have a README did you even make a repo?
@@ -425,3 +379,43 @@ Note:```
 ```
 
 ---
+
+#### final/
+
+```shell
+├── final
+    ├── figures      <- Where you save final png's,
+    |                   also pushed to GitHub if you want.
+    |── tables       <- If you're feeling ambitious,
+    |                   markdown versions of tables
+    └── supp_files   <- Files that would otherwise be
+                        supplementary Excel files
+```
+
+Mostly for you to organize outputs.
+
+---
+
+### It's not just me!
+
+<img src="img/naming_files_tweet.png" width="40%">
+
+<img src="img/naming_files.png" width="40%">
+
+http://buff.ly/2wa5QXz
+
+---
+
+#### There is only one correct way to write the date
+
+# 2019-02-07
+
+Note: That's it. The entire internet agrees with me.
+
+---
+
+#### Working with changing data
+
+If files are small enough: version control with github
+
+Otherwise, keep versions ... somehow?
