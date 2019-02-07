@@ -69,11 +69,11 @@ Grad school is a time to build skills and _grow_
 
 #### What's in it for me?
 
-#### Why am I doing what I'm doing?
-
-I say yes to things that benefited me.
+In my PhD, I said yes to things that benefited me.
 
 _Learning new skills, making connections, building good favor: all of it counts!_
+
+#### Why am I doing what I'm doing?
 
 Note: just make sure you're not doing something for nothing! this talk is an example! I wanted to learn this new presentation style, and write down my reflections on strategies that worked for posterity. Examples: almlab website --> learned xml and css sort of, microbiome club --> got infinite favors from eric
 
@@ -138,7 +138,7 @@ Note: can have other folders here too. Others I've had are qiime2-output, tree, 
     |                   clean data.
     |── exploration  <- Jumble of iPython notebooks
     |                   with preliminary work. Label
-    |                   these by data + brief description.
+    |                   these by date + brief description.
     ├── analysis     <- Scripts used to produce files
     |                   in data/analysis/. For the most
     |                   part, Makefile calls these.
