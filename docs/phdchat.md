@@ -230,7 +230,7 @@ Also, everything is on the cloud.
 
 _(Remember the potential :scream:)_
 
-<img src="img/documents.png">
+<img src="img/documents.png", width="60%">
 
 ---
 
@@ -264,7 +264,7 @@ Otherwise, keep versions ... somehow?
 
 _(I haven't figured a great system for this one out yet)_
 
---
+---
 
 <!-- .slide: data-background="#3F51B5" class="dark" -->
 
@@ -389,3 +389,9 @@ Note: Think of your computational PhD as an act of radical self-love
 Note: source = https://nightowlmom2.wordpress.com/category/soapbox/
 
 ---
+
+Claire Duvallet
+
+[cduvallet.github.io](cduvallet.github.io)
+
+[@cduvallet](https://twitter.com/cduvallet)
