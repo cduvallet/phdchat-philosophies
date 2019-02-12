@@ -45,7 +45,8 @@ _\*future me, that is_
 
 #### "What can I do to make future Claire love present Claire?"
 
-Bread crumbs: READMEs, comments, docs           
+Leave bread crumbs everywhere:
+READMEs, comments, docs           
 
 ---
 
@@ -76,6 +77,16 @@ _Learning new skills, making connections, building good favor: all of it counts!
 #### Why am I doing what I'm doing?
 
 Note: just make sure you're not doing something for nothing! this talk is an example! I wanted to learn this new presentation style, and write down my reflections on strategies that worked for posterity. Examples: almlab website --> learned xml and css sort of, microbiome club --> got infinite favors from eric
+
+---
+
+#### Also, if it would 20% additional effort to be useful to the rest of the world, do it
+
+¯\\\_(ツ)\_/¯
+
+Just seems like the right thing to do...
+
+Note: also my brother tricked me into this one, slash I misinterpreted him.
 
 ---
 
@@ -151,6 +162,22 @@ Iterative process between notebooks and scripts.
 
 ---
 
+#### final/
+
+```shell
+├── final
+    ├── figures      <- Where you save final png's,
+    |                   also pushed to GitHub if you want.
+    |── tables       <- If you're feeling ambitious,
+    |                   markdown versions of tables
+    └── supp_files   <- Files that would otherwise be
+                        supplementary Excel files
+```
+
+Mostly for you to organize outputs.
+
+---
+
 Read more at Cookie Cutter data science:
 
 https://drivendata.github.io/cookiecutter-data-science/
@@ -177,7 +204,25 @@ Use delimiters creatively
 
 ---
 
+#### There is only one correct way to write the date
+
+# 2019-02-07
+
+---
+
+### It's not just me!
+
+<img src="img/naming_files_tweet.png" width="40%">
+
+<img src="img/naming_files.png" width="40%">
+
+http://buff.ly/2wa5QXz
+
+---
+
 <img src="img/notes_example.png">
+
+Note: this my notes folder. Lots of different sorts of things, not super organized (i.e. a human definitely did this), but really easy to grep for what I need.
 
 ---
 
@@ -210,6 +255,16 @@ All data folders should have associated README: who, what, when, why, how?
 Google drive and Dropbox are dangerous: who did what when?
 
 ---
+
+#### Working with changing data
+
+If files are small enough: version control with github
+
+Otherwise, keep versions ... somehow?
+
+_(I haven't figured a great system for this one out yet)_
+
+--
 
 <!-- .slide: data-background="#3F51B5" class="dark" -->
 
@@ -334,88 +389,3 @@ Note: Think of your computational PhD as an act of radical self-love
 Note: source = https://nightowlmom2.wordpress.com/category/soapbox/
 
 ---
-
----
-
----
-
-Supplementary
-
----
-
----
-
-#### If it would 20% additional effort to be useful to the rest of the world, do it
-
-¯\\\_(ツ)\_/¯
-
-Just seems like the right thing to do...
-
-Note: also my brother tricked me into this one, slash I misinterpreted him.
-
----
-
-```
-├── LICENSE
-├── Makefile           
-├── README.md        <- If you don't have a README did you even make a repo?
-|
-├── data
-│   ├── raw          <- Raw data in all of its messy glory. NEVER CHANGE!
-│   ├── clean        <- Intermediate data that has been cleaned up
-│   └── analysis     <- Outputs from analyses (e.g. beta diversity, p-values, etc)
-│
-├── src
-│   ├── data         <- Code used to wrangle and clean data.
-|   |── exploration  <- Jumble of iPython notebooks with preliminary work
-│   ├── analysis     <- Scripts used to produce files in data/analysis
-│   └── util         <- If you want, files with commonly re-used functions
-|
-├── final
-    ├── figures      <- Place where final png's get saved, also pushed to GitHub.
-    |── tables       <- If you're feeling ambitious, markdown versions of tables
-    └── supp_files   <- Files that would otherwise be supplementary Excel files
-
-```
-
----
-
-#### final/
-
-```shell
-├── final
-    ├── figures      <- Where you save final png's,
-    |                   also pushed to GitHub if you want.
-    |── tables       <- If you're feeling ambitious,
-    |                   markdown versions of tables
-    └── supp_files   <- Files that would otherwise be
-                        supplementary Excel files
-```
-
-Mostly for you to organize outputs.
-
----
-
-### It's not just me!
-
-<img src="img/naming_files_tweet.png" width="40%">
-
-<img src="img/naming_files.png" width="40%">
-
-http://buff.ly/2wa5QXz
-
----
-
-#### There is only one correct way to write the date
-
-# 2019-02-07
-
-Note: That's it. The entire internet agrees with me.
-
----
-
-#### Working with changing data
-
-If files are small enough: version control with github
-
-Otherwise, keep versions ... somehow?
